@@ -3,466 +3,388 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سیستەمی بە کرێدانی سەیارە</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <title>چارەسەری کێشەی Failed to locate 'package.json'</title>
     <style>
-        body {
-            background-color: #f8f9fa;
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --error-color: #e74c3c;
+            --light-bg: #f8f9fa;
+            --dark-text: #333;
+            --light-text: #666;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .sidebar {
-            background-color: #343a40;
-            color: white;
-            height: 100vh;
-            position: fixed;
-            padding-top: 20px;
-        }
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 15px;
-            margin: 5px 0;
-            border-radius: 5px;
-        }
-        .sidebar a:hover, .sidebar a.active {
-            background-color: #495057;
-        }
-        .main-content {
-            margin-right: 250px;
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark-text);
+            line-height: 1.6;
+            min-height: 100vh;
             padding: 20px;
         }
-        .section {
-            display: none;
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
-        .section.active {
-            display: block;
-        }
-        .card {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 10px;
-        }
-        .card-header {
-            background-color: #0d6efd;
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
-            border-radius: 10px 10px 0 0 !important;
+            padding: 2rem;
+            text-align: center;
         }
-        .table-hover tbody tr:hover {
-            background-color: rgba(13, 110, 253, 0.1);
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
         }
-        .search-box {
+        
+        header p {
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .error-section {
+            background-color: #fff4f4;
+            border-left: 5px solid var(--error-color);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+        }
+        
+        .error-title {
+            color: var(--error-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .solution-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .solution-title {
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .steps {
+            list-style-type: none;
+            counter-reset: step-counter;
+        }
+        
+        .steps li {
+            margin-bottom: 1.5rem;
+            padding-right: 3rem;
             position: relative;
+            line-height: 1.6;
         }
-        .suggestions {
+        
+        .steps li:before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
             position: absolute;
-            top: 100%;
-            left: 0;
             right: 0;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 0 0 5px 5px;
-            z-index: 1000;
-            display: none;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
-        .suggestion-item {
-            padding: 10px;
+        
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.2rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.2rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .file-structure {
+            background-color: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.2rem 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .note {
+            background-color: #f0f8ff;
+            border-left: 5px solid var(--primary-color);
+            padding: 1.2rem;
+            margin: 1.2rem 0;
+            border-radius: 4px;
+        }
+        
+        .success-message {
+            background-color: #f0fff4;
+            border-left: 5px solid var(--success-color);
+            padding: 1.2rem;
+            margin: 1.2rem 0;
+            border-radius: 4px;
+        }
+        
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
             cursor: pointer;
+            margin-top: 10px;
         }
-        .suggestion-item:hover {
-            background-color: #f0f0f0;
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
-        .car-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 5px;
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 1.5rem;
+            }
+            
+            .steps li {
+                padding-right: 2.5rem;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="sidebar" style="width: 250px;">
-        <h4 class="text-center mb-4">سیستەمی بە کرێدانی سەیارە</h4>
-        <a href="#" class="active" data-section="rent-car"><i class="bi bi-car-front"></i> بە کرێدانی سەیارە</a>
-        <a href="#" data-section="rental-history"><i class="bi bi-clock-history"></i> مێژووی بە کرێدان</a>
-        <a href="#" data-section="garage"><i class="bi bi-house-gear"></i> گەراج و سەیارە</a>
-    </div>
-
-    <div class="main-content">
-        <!-- بەشی بە کرێدانی سەیارە -->
-        <div id="rent-car" class="section active">
-            <h2 class="mb-4">بە کرێدانی سەیارە</h2>
+    <div class="container">
+        <header>
+            <h1>چارەسەری کێشەی <code>Failed to locate 'package.json'</code></h1>
+            <p>ئەم کێشەیە کاتێک ڕوودەدا کە فایلێکی package.json لە پڕۆژەکەتدا نییە یان ڕێگای دروستی پێناسە نەکراوە</p>
+        </header>
+        
+        <div class="content">
+            <div class="error-section">
+                <h2 class="error-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    هەڵەیەک ڕوویدا
+                </h2>
+                <p>لە ماڵپەڕی Vercel، هەڵەی <code>Failed to locate 'package.json'</code> بەڕێزەکەت. ئەمە مانای ئەوەیە کە فایلێکی <code>package.json</code> لە پڕۆژەکەتدا نییە یان لە شوێنێکی هەڵەدایە.</p>
+            </div>
             
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">گەڕان بەدوای سەیارە</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="search-box">
-                                <input type="text" class="form-control" id="car-search" placeholder="ناوی سەیارە بنووسە...">
-                                <div class="suggestions" id="car-suggestions"></div>
-                            </div>
+            <div class="solution-section">
+                <h2 class="solution-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                    </svg>
+                    چارەسەرەکان
+                </h2>
+                
+                <ol class="steps">
+                    <li>
+                        <strong>دڵنیابە لە بوونی فایلی package.json</strong>
+                        <p>دڵنیابە لەوەی کە فایلی <code>package.json</code> لە پڕۆژەکەتدا هەیە. ئەم فایلە پێویستە لە ڕەگی پڕۆژەکەتدا بێت.</p>
+                        <div class="file-structure">
+                            پڕۆژەکەم/<br>
+                            ├── package.json  &larr; ئەم فایلە پێویستە لێرە بێت<br>
+                            ├── public/<br>
+                            ├── src/<br>
+                            └── ...
                         </div>
-                    </div>
+                    </li>
                     
-                    <div class="row" id="car-results">
-                        <!-- نەخشەکانی سەیارەکان لێرە دەردەکەون -->
-                    </div>
-                </div>
+                    <li>
+                        <strong>دروستکردنی فایلی package.json ئەگەر نییە</strong>
+                        <p>ئەگەر فایلی <code>package.json</code>ت نییە، دەتوانیت بە هۆکاری خوارەوە دروستی بکەیت:</p>
+                        <div class="code-block">
+{
+  "name": "newsytam",
+  "version": "1.0.0",
+  "description": "My news website",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^3.1.0",
+    "vite": "^4.1.0"
+  }
+}
+                        </div>
+                        <p>یان بە بەکارهێنانی فەرمانی <code>npm init</code> لە ترمیناڵ:</p>
+                        <div class="code-block">
+npm init -y
+                        </div>
+                    </li>
+                    
+                    <li>
+                        <strong>ڕێگای ڕاست دیاری بکە لە Vercel</strong>
+                        <p>لە ڕێگای پەیوەندییەکەت لە Vercel، دڵنیابە لەوەی کە ڕێگای ڕاست دیاری کراوە بۆ فایلی <code>package.json</code>:</p>
+                        <div class="note">
+                            <p>بچە بۆ پەیوەندییەکەت → Settings → Build & Development Settings</p>
+                            <p>دڵنیابە لەوەی کە "Root Directory" بە شێوازی ڕاست دیاری کراوە.</p>
+                        </div>
+                    </li>
+                    
+                    <li>
+                        <strong>پێکهێنانی Framework Preset</strong>
+                        <p>لە Vercel، Framework Preset دیاری بکە بۆ پڕۆژەکەت:</p>
+                        <div class="note">
+                            <p>بچە بۆ پەیوەندییەکەت → Settings → Framework Preset</p>
+                            <p>ئەگەر پڕۆژەکەت Reactە، "Create React App" هەڵبژێرە. ئەگەر Vueە، "Vue" هەڵبژێرە، هتد.</p>
+                        </div>
+                    </li>
+                    
+                    <li>
+                        <strong>Build Command و Output Directory</strong>
+                        <p>دڵنیابە لەوەی کە Build Command و Output Directory بە شێوازی ڕاست دیاری کراوە:</p>
+                        <div class="note">
+                            <p>Build Command: <code>npm run build</code></p>
+                            <p>Output Directory: <code>dist</code> یان <code>build</code> یان <code>out</code> (پەیوەستە بە پڕۆژەکەت)</p>
+                        </div>
+                    </li>
+                </ol>
             </div>
             
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">کەسی بەکرێدهێنەر</h5>
-                </div>
-                <div class="card-body">
-                    <form id="renter-form">
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" id="renter-name" placeholder="ناوی کەسەکە">
-                            </div>
-                            <div class="col-md-4">
-                                <input type="tel" class="form-control" id="renter-phone" placeholder="ژمارەی موبایل">
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" id="renter-address" placeholder="ناونیشان">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <input type="file" class="form-control" id="id-card" accept="image/*">
-                                <small class="form-text text-muted">وێنەی کارتی نیشتمانی</small>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="search-box">
-                                    <input type="text" class="form-control" id="customer-search" placeholder="گەڕان بەدوای کەسەکان...">
-                                    <div class="suggestions" id="customer-suggestions"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label for="rent-date" class="form-label">بەرواری بەکرێدان</label>
-                                <input type="date" class="form-control" id="rent-date">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="return-date" class="form-label">بەرواری وەرگرتنەوە</label>
-                                <input type="date" class="form-control" id="return-date">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="rent-price" class="form-label">بڕی پارەی بەکرێدان</label>
-                                <input type="number" class="form-control" id="rent-price" placeholder="بڕی پارە">
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">تۆمارکردنی بەکرێدان</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- بەشی مێژووی بە کرێدان -->
-        <div id="rental-history" class="section">
-            <h2 class="mb-4">مێژووی بە کرێدان</h2>
-            
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">فلترکردن</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="filter-start-date" class="form-label">بەرواری دەستپێک</label>
-                            <input type="date" class="form-control" id="filter-start-date">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="filter-end-date" class="form-label">بەرواری کۆتایی</label>
-                            <input type="date" class="form-control" id="filter-end-date">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="filter-customer" class="form-label">کەس</label>
-                            <input type="text" class="form-control" id="filter-customer" placeholder="ناوی کەس">
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" id="apply-filter">جێبەجێکردنی فلتر</button>
-                    <button class="btn btn-secondary" id="print-history">چاپکردن</button>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">مێژووی بە کرێدان</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ناوی کەس</th>
-                                    <th>سەیارە</th>
-                                    <th>بەرواری بەکرێدان</th>
-                                    <th>بەرواری وەرگرتنەوە</th>
-                                    <th>بڕی پارە</th>
-                                    <th>کردار</th>
-                                </tr>
-                            </thead>
-                            <tbody id="rental-history-table">
-                                <!-- مێژووی بەکرێدان لێرە دەردەکەون -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- بەشی گەراج و سەیارە -->
-        <div id="garage" class="section">
-            <h2 class="mb-4">گەراج و سەیارە</h2>
-            
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">زیادکردنی سەیارەی نوێ</h5>
-                </div>
-                <div class="card-body">
-                    <form id="car-form">
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" id="car-name" placeholder="ناوی سەیارە" required>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" id="car-model" placeholder="مۆدێلی سەیارە" required>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" id="car-color" placeholder="رەنگی سەیارە" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" id="car-plate" placeholder="رەقەمی سەیارە" required>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" id="car-type" placeholder="جۆری سەیارە" required>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="file" class="form-control" id="car-image" accept="image/*">
-                                <small class="form-text text-muted">وێنەی سەیارە</small>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">زیادکردنی سەیارە</button>
-                    </form>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">سەیارەکان</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row" id="car-list">
-                        <!-- لیستی سەیارەکان لێرە دەردەکەون -->
-                    </div>
+            <div class="success-message">
+                <h3>پێشنیارێکی زیاتر</h3>
+                <p>ئەگەر هێشتا کێشەکەت چارەسەر نەبوو، دەتوانیت پڕۆژەکەت بە شێوازی خوارەوە لە Vercel دیپلۆی بکەیت:</p>
+                
+                <div class="actions">
+                    <a href="#" class="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px;">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        دروستکردنی فایلی package.json
+                    </a>
+                    
+                    <a href="#" class="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px;">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                        </svg>
+                        سەیرکردنی نموونەی package.json
+                    </a>
+                    
+                    <a href="#" class="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px;">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        پەیوەندی بە پشتیوانی Vercel
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // نموونە داتا
-        const sampleCars = [
-            { id: 1, name: "تۆیۆتا کەمری", model: "2022", color: "سپی", plate: "12345ABC", type: "سدان", image: "https://via.placeholder.com/300x150?text=Toyota+Camry" },
-            { id: 2, name: "هیوندا ئێلانترا", model: "2021", color: "ڕەش", plate: "67890XYZ", type: "سدان", image: "https://via.placeholder.com/300x150?text=Hyundai+Elantra" },
-            { id: 3, name: "هۆندا سیڤیک", model: "2020", color: "شین", plate: "54321DEF", type: "سدان", image: "https://via.placeholder.com/300x150?text=Honda+Civic" }
-        ];
-
-        const sampleCustomers = [
-            { id: 1, name: "عەلی محەممەد", phone: "07501234567", address: "هەولێر، کەوی ١٠" },
-            { id: 2, name: "سارا عەبدوڵڵا", phone: "07507654321", address: "سلێمانی، شەقامی نەوشەوان" },
-            { id: 3, name: "ئەحمەد حسن", phone: "07509876543", address: "دهۆک، ناوچەی ناوەندی" }
-        ];
-
-        let rentals = [];
-
-        // گۆڕینی نێوان بەشەکان
-        document.querySelectorAll('.sidebar a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // چالاککردنی لینکەکە
-                document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
-                this.classList.add('active');
-                
-                // نیشاندانی بەشی هەڵبژێردراو
-                const sectionId = this.getAttribute('data-section');
-                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-                document.getElementById(sectionId).classList.add('active');
-            });
-        });
-
-        // پێشنیاری ناوی سەیارە
-        const carSearch = document.getElementById('car-search');
-        const carSuggestions = document.getElementById('car-suggestions');
-
-        carSearch.addEventListener('input', function() {
-            const value = this.value.toLowerCase();
-            carSuggestions.innerHTML = '';
-            
-            if (value) {
-                const filteredCars = sampleCars.filter(car => 
-                    car.name.toLowerCase().includes(value) || 
-                    car.model.toLowerCase().includes(value)
-                );
-                
-                if (filteredCars.length > 0) {
-                    carSuggestions.style.display = 'block';
-                    filteredCars.forEach(car => {
-                        const div = document.createElement('div');
-                        div.className = 'suggestion-item';
-                        div.textContent = `${car.name} - ${car.model}`;
-                        div.addEventListener('click', function() {
-                            carSearch.value = car.name;
-                            carSuggestions.style.display = 'none';
-                            displayCarResults([car]);
-                        });
-                        carSuggestions.appendChild(div);
-                    });
-                } else {
-                    carSuggestions.style.display = 'none';
-                }
-            } else {
-                carSuggestions.style.display = 'none';
-                displayCarResults(sampleCars);
-            }
-        });
-
-        // پێشنیاری کەسی بەکرێدهێنەر
-        const customerSearch = document.getElementById('customer-search');
-        const customerSuggestions = document.getElementById('customer-suggestions');
-
-        customerSearch.addEventListener('input', function() {
-            const value = this.value.toLowerCase();
-            customerSuggestions.innerHTML = '';
-            
-            if (value) {
-                const filteredCustomers = sampleCustomers.filter(customer => 
-                    customer.name.toLowerCase().includes(value)
-                );
-                
-                if (filteredCustomers.length > 0) {
-                    customerSuggestions.style.display = 'block';
-                    filteredCustomers.forEach(customer => {
-                        const div = document.createElement('div');
-                        div.className = 'suggestion-item';
-                        div.textContent = customer.name;
-                        div.addEventListener('click', function() {
-                            customerSearch.value = customer.name;
-                            document.getElementById('renter-name').value = customer.name;
-                            document.getElementById('renter-phone').value = customer.phone;
-                            document.getElementById('renter-address').value = customer.address;
-                            customerSuggestions.style.display = 'none';
-                        });
-                        customerSuggestions.appendChild(div);
-                    });
-                } else {
-                    customerSuggestions.style.display = 'none';
-                }
-            } else {
-                customerSuggestions.style.display = 'none';
-            }
-        });
-
-        // نیشاندانی ئەنجامەکانی سەیارە
-        function displayCarResults(cars) {
-            const resultsContainer = document.getElementById('car-results');
-            resultsContainer.innerHTML = '';
-            
-            cars.forEach(car => {
-                const col = document.createElement('div');
-                col.className = 'col-md-4 mb-3';
-                col.innerHTML = `
-                    <div class="card">
-                        <img src="${car.image}" class="car-image" alt="${car.name}">
-                        <div class="card-body">
-                            <h5 class="card-title">${car.name}</h5>
-                            <p class="card-text">
-                                مۆدێل: ${car.model}<br>
-                                رەنگ: ${car.color}<br>
-                                رەقەم: ${car.plate}<br>
-                                جۆر: ${car.type}
-                            </p>
-                            <button class="btn btn-primary btn-sm select-car" data-car-id="${car.id}">هەڵبژاردنی سەیارە</button>
-                        </div>
-                    </div>
-                `;
-                resultsContainer.appendChild(col);
-            });
-            
-            // زیادکردنی ڕیەکسان بۆ هەڵبژاردنی سەیارە
-            document.querySelectorAll('.select-car').forEach(button => {
-                button.addEventListener('click', function() {
-                    const carId = parseInt(this.getAttribute('data-car-id'));
-                    const selectedCar = sampleCars.find(car => car.id === carId);
-                    alert(`سەیارەی ${selectedCar.name} هەڵبژێردرا`);
-                });
-            });
-        }
-
-        // زیادکردنی کەسی نوێ
-        document.getElementById('renter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('renter-name').value;
-            const phone = document.getElementById('renter-phone').value;
-            const address = document.getElementById('renter-address').value;
-            const rentDate = document.getElementById('rent-date').value;
-            const returnDate = document.getElementById('return-date').value;
-            const price = document.getElementById('rent-price').value;
-            
-            if (name && phone && rentDate && returnDate && price) {
-                // لە ڕیالیەتدا، ئەم داتایە دەخرێتە ناو داتابەیسێکەوە
-                alert("بەکرێدان تۆمارکرا!");
-                this.reset();
-            } else {
-                alert("تکایە هەموو خانە پێویستەکان پڕبکەرەوە");
-            }
-        });
-
-        // زیادکردنی سەیارەی نوێ
-        document.getElementById('car-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('car-name').value;
-            const model = document.getElementById('car-model').value;
-            const color = document.getElementById('car-color').value;
-            const plate = document.getElementById('car-plate').value;
-            const type = document.getElementById('car-type').value;
-            
-            if (name && model && color && plate && type) {
-                // لە ڕیالیەتدا، ئەم داتایە دەخرێتە ناو داتابەیسێکەوە
-                alert("سەیارە زیادکرا!");
-                this.reset();
-            } else {
-                alert("تکایە هەموو خانە پێویستەکان پڕبکەرەوە");
-            }
-        });
-
-        // فلترکردنی مێژووی بەکرێدان
-        document.getElementById('apply-filter').addEventListener('click', function() {
-            // لە ڕیالیەتدا، ئەمە داتاکان لە داتابەیسەکە وەردەگرێت و فلتر دەکات
-            alert("فلتر جێبەجێکرا!");
-        });
-
-        // چاپکردنی مێژووی بەکرێدان
-        document.getElementById('print-history').addEventListener('click', function() {
-            window.print();
-        });
-
-        // دەستپێکردنی سیستەمەکە
+        // کۆدی جاڤاسکریپت بۆ دروستکردنی فایلەکان
         document.addEventListener('DOMContentLoaded', function() {
-            displayCarResults(sampleCars);
+            // دروستکردنی فایلی package.json
+            document.querySelectorAll('.button')[0].addEventListener('click', function(e) {
+                e.preventDefault();
+                const packageJsonContent = `{
+  "name": "newsytam",
+  "version": "1.0.0",
+  "description": "My news website",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^3.1.0",
+    "vite": "^4.1.0"
+  }
+}`;
+                
+                const blob = new Blob([packageJsonContent], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'package.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert('فایلی package.json داگرتە بە سەرکەوتوویی! ئێستا ئەم فایلە زیاد بکە بە ڕەگی پڕۆژەکەت.');
+            });
+            
+            // سەیرکردنی نموونەی package.json
+            document.querySelectorAll('.button')[1].addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('نموونەی فایلی package.json لە بەشی ٢ی چارەسەرەکان پیشان دراوە. دەتوانیت ئەو نموونەیە کۆپی بکەیت و بۆ پڕۆژەکەت بەکاریبێنیت.');
+            });
+            
+            // پەیوەندی بە پشتیوانی Vercel
+            document.querySelectorAll('.button')[2].addEventListener('click', function(e) {
+                e.preventDefault();
+                window.open('https://vercel.com/contact', '_blank');
+            });
         });
     </script>
 </body>
